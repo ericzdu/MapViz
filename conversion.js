@@ -11,13 +11,31 @@
 //46° 52.587' N 101° 25.072' W
 //46.876446° -101.417872°
 
-inputCoordinates = "43° 27.296' n 102° 4.654' W   ";
-
+inputCoordinates = "43° 27.296' N 102° 4.654' W";
 console.log("input coordinates: " + inputCoordinates);
-console.log(cleanCoordinates(inputCoordinates));
+let coordinates = convertCoordinates(inputCoordinates);
+console.log("converted coordinates: " + coordinates);
 
-let coordinates = coordinate.trim(",");
+function convertCoordinates(inputCoordinates){
+    let coordinates = cleanCoordinates(inputCoordinates);
+    let check = checkCoordinates(coordinates);
+    coordinates = coordinates.split(",");   
 
+    switch(check){
+        case "DMS":
+            coordinates = convertDMS(coordinates); 
+            break; 
+        case "DDM": 
+            coordinates = convertDDM(coordinates);
+            break; 
+        case "DD":    
+            break; 
+        default:
+            throw new error("something went wrong!");
+    }
+
+    return coordinates;
+}
 
 function cleanCoordinates(coordinates) {
     let cleanCoordinates = coordinates.trim();
@@ -53,6 +71,7 @@ function cleanCoordinates(coordinates) {
 }
 
 function checkCoordinates(coordinates){
+    //TODO: IMPROVE CHECKING
     if(isNaN(coordinates.charAt(0))){
         throw new Error("Coordinates must start with a number.");
     }else if(!coordinates.includes(",")){
@@ -75,16 +94,15 @@ function checkCoordinates(coordinates){
 }
 
 function convertDMS(coordinates){
-    //let longitude = coordinates[0];
-    //let latitude = coordinates[1];
     let result = ""
 
     for(let i = 0;i < 2;i++){
-        let split = coordinates[i].split([/°'"/]);
-        if(coordinates[i].includes("S") || coordinates[i].includes("W")){
-            split[0] = -split[0];
+        let split = coordinates[i].split(/°|'|"/);
+        if(split[3].includes("S") || split[3].includes("W")){
+            split[0] *= -1;
         }
-        result.concat(split[0].concat(split[1]/60).concat(split[2]/3600).replace(".", "")).concat(",");
+        let decimal = (split[1]/60 + split[2]/3600).toFixed(6).toString().replace(/0/, ""); 
+        result = result.concat(split[0]).concat(decimal + ",")
     }
     //get rid of extra comma at the end
     result = result.substring(0, result.length - 1);
@@ -97,11 +115,12 @@ function convertDDM(coordinates){
     let result = ""
 
     for(let i = 0;i < 2;i++){
-        let split = coordinates[i].split([/°'/]);
-        if(coordinates[i].includes("S") || coordinates[i].includes("W")){
-            split[0] = -split[0];
+        let split = coordinates[i].split(/°|'/);
+        if(split[2].includes("S") || split[2].includes("W")){
+            split[0] *= -1;
         }
-        result.concat(split[0].concat(split[1]/60).replace(".", "")).concat(",");
+        let decimal = (split[1]/60).toFixed(6).toString().replace(/0/, ""); 
+        result = result.concat(split[0]).concat(decimal + ",")
     }
     //get rid of extra comma at the end
     result = result.substring(0, result.length - 1);
@@ -109,11 +128,9 @@ function convertDDM(coordinates){
 }
 
 function convertUTM(){
-    //implement later
+    //TODO implement later
 }
 
 function convertMGRS(){
-    //implement later
+    //TODO implement later
 }
-
-
