@@ -11,7 +11,7 @@
 //46° 52.587' N 101° 25.072' W
 //46.876446° -101.417872°
 
-inputCoordinates = "43° 27.296' N 102° 4.654' W";
+inputCoordinates = "8°14'45.87\" S  75°32'26.83\" W";
 console.log("input coordinates: " + inputCoordinates);
 let coordinates = convertCoordinates(inputCoordinates);
 console.log("converted coordinates: " + coordinates);
@@ -134,3 +134,20 @@ function convertUTM(){
 function convertMGRS(){
     //TODO implement later
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("coordForm");
+    const resultDisplay = document.getElementById("result");
+  
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form from refreshing the page
+  
+      const inputCoordinates = document.getElementById("coordinates").value;
+      try {
+        const converted = convertCoordinates(inputCoordinates);
+        resultDisplay.textContent = converted;
+      } catch (error) {
+        resultDisplay.textContent = "Error: " + error.message;
+      }
+    });
+  });

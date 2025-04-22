@@ -9,12 +9,19 @@
   <title>BTE Build Helper</title>
 </head>
 <body>
+  <script src="conversion.js"></script>
     <p>welcome to my website</p>
-
     <p>new coordinate</p>
     <p>new vertex</p>
+    <div class = "circle"></div>
 
-    <div class = "circle">blah blah</div>
+    <form id="coordForm">
+      <label for="coordinates">Input coordinates: </label><br>
+      <input type="text" id="coordinates" name="coordinates"><br>
+      <input type="submit" value="Submit">
+    </form>
+    
+    <p><strong>Converted:</strong> <span id="result"></span></p>
 
     <div class="flex-container">
         <div class="one"></div>
