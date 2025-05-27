@@ -1,3 +1,7 @@
+const Z = Math.sqrt(5 + 2 * Math.sqrt(5)) / Math.sqrt(15);
+const EL6 = (Math.sqrt(8) / Math.sqrt(5 + Math.sqrt(5))) / 6; 
+const DVE = Math.sqrt(3 + Math.sqrt(5)) / Math.sqrt(5 + Math.sqrt(5));
+
 //vertex coordinates 
 /*
 const VERTICES = [
@@ -121,6 +125,31 @@ const ISO = [
     [3, 7, 8],     
 ];
 
+const CENTER_MAP = [
+    [ -3,  7 ],
+    [ -2,  5 ],
+    [ -1,  7 ],
+    [  2,  5 ],
+    [  4,  5 ],
+    [ -4,  1 ],
+    [ -3, -1 ],
+    [ -2,  1 ],
+    [ -1, -1 ],
+    [  0,  1 ],
+    [  1, -1 ],
+    [  2,  1 ],
+    [  3, -1 ],
+    [  4,  1 ],
+    [  5, -1 ],
+    [ -3, -5 ],
+    [ -1, -5 ],
+    [  1, -5 ],
+    [  2, -7 ],
+    [ -4, -7 ],
+    [ -5, -5 ],
+    [ -2, -7 ]
+  ];
+
 const FLIP_TRIANGLE = [
     true, false, true, false, false,
     true, false, true, false, true, false, true, false, true, false,
@@ -128,55 +157,168 @@ const FLIP_TRIANGLE = [
     true, false
 ];
 
+const ROTATION_MATRICES = [
+    [
+      [-0.4560824240130257, 0.4499117160495866, -0.7678334912386401],
+      [-0.25960650709436284, 0.7580066816325297, 0.5983563587651636],
+      [0.8512304529213385, 0.4722343892197568, -0.22891351567257]
+    ],
+    [
+      [-0.09385435568122782, -0.7202116664364577, 0.6873765456054507],
+      [0.5771129083709565, -0.6019488466772965, -0.5519042280826343],
+      [0.8112533826809462, 0.3448952616559021, 0.4721389706177932]
+    ],
+    [
+      [0.6079420100425845, 0.7154153209020857, -0.34436525818373126],
+      [-0.28030413163254086, 0.5991800574041244, 0.7499418994821648],
+      [0.7428567198424668, -0.35939418112673455, 0.5648005987577692]
+    ],
+    [
+      [0.05601800808715709, 0.17843493383097273, -0.9823558200360416],
+      [0.6696489465617025, 0.7230710069748366, 0.16952465083638388],
+      [0.7405621318557609, -0.6673299732974176, -0.07898376795341276]
+    ],
+    [
+      [0.09584151157692876, 0.9868916643626472, -0.12984316489586],
+      [0.5819727830002832, 0.05026939723928185, 0.8116530462877007],
+      [0.8075407633708372, -0.15335524286024052, -0.5695261934114374]
+    ],
+    [
+      [-0.00321491259002063, -0.4314975961618643, -0.902108357595456],
+      [-0.9586365630423168, 0.2580859354669396, -0.12003162046964397],
+      [0.2846148350586324, 0.864408164249209, -0.41447909626887114]
+    ],
+    [
+      [-0.056018652038180225, -0.17843520642122715, 0.9823557338017829],
+      [0.9928349028389638, 0.09405856397888952, 0.07370103287589966],
+      [-0.10554982865249278, 0.9794456920379216, 0.1718876668635252]
+    ],
+    [
+      [0.09385463712176662, 0.7202115172383432, -0.6873766635026135],
+      [-0.970990104239508, 0.21873629112561388, 0.09660565414902024],
+      [0.21993072672932928, 0.6583690495321407, 0.7198476714267087]
+    ],
+    [
+      [-0.09584151684629905, -0.9868916636306594, 0.12984316656994357],
+      [0.9721374115168984, -0.0647682380626235, 0.22528632552262903],
+      [-0.21392348346505866, 0.14781718301528027, 0.9656017935088987]
+    ],
+    [
+      [0.061220491356752754, 0.876612800257321, 0.47728612997137887],
+      [-0.992125877363331, 0.001098728471354754, 0.1252399148106825],
+      [0.10926250456619842, -0.4811951695733909, 0.869777508260105]
+    ],
+    [
+      [-0.003215258170896157, -0.43149762346853826, -0.9021083433024539],
+      [0.9586365717302896, -0.2580860450993229, 0.12003131535639971],
+      [-0.28461480189212174, -0.8644081178852925, 0.4144792157369468]
+    ],
+    [
+      [-0.05601809816337217, -0.17843497810445044, 0.9823558068576901],
+      [-0.9928349353508852, -0.0940586650155482, -0.07370046595712],
+      [0.10554981679265253, -0.9794457239297935, -0.17188749242071194]
+    ],
+    [
+      [0.09385437774951289, 0.7202114525176924, -0.6873767667295771],
+      [0.9709901248854792, -0.21873612929459965, -0.0966058130554147],
+      [-0.2199307462637575, -0.6583691740988272, -0.7198475515303882]
+    ],
+    [
+      [-0.09584150525709173, -0.9868916644216071, 0.1298431691126064],
+      [-0.9721374113761856, 0.06476822544346333, -0.22528632975774096],
+      [0.213923489296673, -0.14781718326383692, -0.9656017921788885]
+    ],
+    [
+      [0.06122042403983832, 0.8766128160803518, 0.47728610954443007],
+      [0.9921258808565033, -0.0010986702147643412, -0.1252398876495287],
+      [-0.10926251056556303, 0.48119514088094706, -0.8697775233802468]
+    ],
+    [
+      [0.05601800422555942, 0.1784348880140056, -0.9823558285784304],
+      [-0.669648926636276, -0.7230710334369981, -0.1695246166762662],
+      [-0.740562150165311, 0.6673299568757428, 0.07898373502658955]
+    ],
+    [
+      [0.09584151171968178, 0.9868916636784872, -0.12984316999054493],
+      [-0.5819727887268177, -0.0502694002590299, -0.8116530419946247],
+      [-0.8075407592269364, 0.1533552462731709, 0.5695261983681508]
+    ],
+    [
+      [0.0032152969575328927, 0.4314975966230034, 0.9021083560050016],
+      [-0.5247823171864302, 0.7686380756780608, -0.3657854947730551],
+      [-0.8512303926869128, -0.47223440442909237, 0.2289137082823669]
+    ],
+    [
+      [0.5467215197213245, -0.16119733727046173, -0.8216513849136495],
+      [0.20727621503524105, -0.9246959624433986, 0.3193335994247102],
+      [-0.8112534440939341, -0.3448953399189235, -0.4721388079240472]
+    ],
+    [
+      [-0.5467214984687466, 0.1611975561108603, 0.8216513561213019],
+      [0.38634117039367355, 0.9191578716533797, 0.07674182064869016],
+      [-0.742856717793502, 0.3593941497597, 0.8285959573056021]
+    ],
+    [
+      [-0.4392579496354402, -0.34710400922329054, 19220460028],
+      [-0.10926251056556312, 0.48119514088094745, -0.8697775233802466],
+      [19220460028, -0.10926251056556312, 0.48119514088094745]
+    ],
+    [
+      [-0.8697775233802466, -0.6079419972577488, -0.7154153371473388],
+      [0.3443652470047156, 0.28631142085636496, 0.20700633814107897],
+      [0.9355074271520407, -0.740562150165311, 0.6673299568757428]
+    ]
+  ];  
+
 for(let i = 0;i < 22;i++){
-    //code used to calculate rotation matrices
-    let centroidLambda = CENTROIDS_SPHERICAL[i][0]; //longitude
-    let centroidPhi = CENTROIDS_SPHERICAL[i][1];
+    // //code used to calculate rotation matrices
+    // let centroidLambda = CENTROIDS_SPHERICAL[i][0]; //longitude
+    // let centroidPhi = CENTROIDS_SPHERICAL[i][1];
 
-    let vertex = VERTICES[ISO[i][0]]; 
-    let v = [vertex[0] - centroidLambda, vertex[1]];
-    v = yRotate(v, -centroidPhi); //rotate the vertex to the centroid
+    // let vertex = VERTICES[ISO[i][0]]; 
+    // let v = [vertex[0] - centroidLambda, vertex[1]];
+    // v = yRotate(v, -centroidPhi); //rotate the vertex to the centroid
 
 
-    let a = -centroidLambda; 
-    let b = -centroidPhi; 
-    let c = (Math.PI / 2) - v[0]; 
+    // let a = -centroidLambda; 
+    // let b = -centroidPhi; 
+    // let c = (Math.PI / 2) - v[0]; 
 
-    let sina = Math.sin(a);
-    let cosa = Math.cos(a);
-    let sinb = Math.sin(b);
-    let cosb = Math.cos(b);
-    let sinc = Math.sin(c);
-    let cosc = Math.cos(c);
+    // let sina = Math.sin(a);
+    // let cosa = Math.cos(a);
+    // let sinb = Math.sin(b);
+    // let cosb = Math.cos(b);
+    // let sinc = Math.sin(c);
+    // let cosc = Math.cos(c);
 
-    let mat = [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-      ];
+    // let mat = [
+    //     [0, 0, 0],
+    //     [0, 0, 0],
+    //     [0, 0, 0]
+    //   ];
 
-    mat[0][0] = cosa * cosb * cosc - sinc * sina;
-    mat[0][1] = -sina * cosb * cosc - sinc * cosa;
-    mat[0][2] = cosc * sinb;
+    // mat[0][0] = cosa * cosb * cosc - sinc * sina;
+    // mat[0][1] = -sina * cosb * cosc - sinc * cosa;
+    // mat[0][2] = cosc * sinb;
 
-    mat[1][0] = sinc * cosb * cosa + cosc * sina;
-    mat[1][1] = cosc * cosa - sinc * cosb * sina;
-    mat[1][2] = sinc * sinb;
+    // mat[1][0] = sinc * cosb * cosa + cosc * sina;
+    // mat[1][1] = cosc * cosa - sinc * cosb * sina;
+    // mat[1][2] = sinc * sinb;
 
-    mat[2][0] = -sinb * cosa;
-    mat[2][1] = sinb * sina;
-    mat[2][2] = cosb;
+    // mat[2][0] = -sinb * cosa;
+    // mat[2][1] = sinb * sina;
+    // mat[2][2] = cosb;
 
-    //return mat;
+    // //return mat;
 
-    for(let j = 0;j < 3;j++){   
-        for(let k = 0;k < 3;k++){
-            process.stdout.write(mat[j][k].toString() + ", "); //print the rotation matrix
-            //print(mat[j][k] + ","); //print the rotation matrix
-        }
-        console.log("");
-    }
-    console.log("");
+    // for(let j = 0;j < 3;j++){   
+    //     for(let k = 0;k < 3;k++){
+    //         process.stdout.write(mat[j][k].toString() + ", "); //print the rotation matrix
+    //         //print(mat[j][k] + ","); //print the rotation matrix
+    //     }
+    //     console.log("");
+    // }
+    // console.log("");
 
 
     //code used to calculate the centroids, longitude and latitude are swapped
@@ -204,7 +346,43 @@ function fromGeoDimaxion(lat, lon) {
     let xyz = GeoToCartesian(lon, lat)
     let face = findTriangle(xyz[0], xyz[1], xyz[2]);
 
-    //rotation matrices 
+    //let pvec = matrixXVector(ROTATION_MATRICES[face], xyz); 
+    let pvec = [0, 0, 0];
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            pvec[i] += ROTATION_MATRICES[face][i][j] * xyz[j];
+        }
+    }
+
+    let S = Z / pvec[2];
+
+    let xp = S * pvec[0];
+    let yp = S * pvec[1];
+
+    let a = Math.atan((2 * yp / Math.sqrt(3) - EL6) / DVE);
+    let b = Math.atan((xp - yp / Math.sqrt(3) - EL6) / DVE);
+    let c = Math.atan((-xp - yp / Math.sqrt(3) - EL6) / DVE);
+
+    let projectedVector = [0.5 * (b - c), (2 * a - b - c) / (2 * Math.sqrt(3))];
+    //return new double[]{ 0.5 * (b - c), (2 * a - b - c) / (2 * MathUtils.ROOT3) };
+
+    //flip triangle to correct orientation
+    if (FLIP_TRIANGLE[face]) {
+        projectedVector[0] = -projectedVector[0];
+        projectedVector[1] = -projectedVector[1];
+    }
+
+    xyz[0] = projectedVector[0];
+    if (((face == 15 && xyz[0] > projectedVector[1] * Math.sqrt(3)) || face == 14) && xyz[0] > 0) {
+        projectedVector[0] = 0.5 * xyz[0] - 0.5 * MathUtils.Math.sqrt(3) * projectedVector[1];
+        projectedVector[1] = 0.5 * Math.sqrt(3) * xyz[0] + 0.5 * projectedVector[1];
+        face += 6; //shift 14->20 & 15->21
+    }
+    
+    projectedVector[0] += CENTER_MAP[face][0];
+    projectedVector[1] += CENTER_MAP[face][1];
+    
+    return projectedVector;
 }
 
 function findTriangle(x, y, z) {
@@ -277,6 +455,16 @@ function CartesianToGeo(x, y, z) {
     return [lambda, phi]; 
 }
 
+function matrixXVector(mat, vec) {
+    let result = [0, 0, 0];
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            result[i] += mat[i][j] * vec[j];
+        }
+    }
+    return result;
+}
+
 function toRadians(degrees) {
     return degrees * (Math.PI / 180);
 }
@@ -284,3 +472,4 @@ function toRadians(degrees) {
 function toDegrees(radians) {
     return radians * (180 / Math.PI);
 }
+
