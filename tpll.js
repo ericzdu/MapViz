@@ -1,33 +1,34 @@
+//vertex coordinates 
 /*
 const VERTICES = [
-    [64.700000, 10.536199],
-    [2.300882, -5.245390],
-    [10.447378, 58.157706],
-    [39.100000, 122.300000],
-    [50.103201, -143.478490],
-    [23.717925, -67.132330],
-    [-50.103200, 36.521510],
-    [-23.717930, 112.867673],
-    [-2.300882, 174.754610],
-    [-10.447350, -121.842290],
-    [-39.100000, -57.700000],
-    [-64.700000, -169.463800],
+    [10.536199, 64.700000],
+    [-5.245390, 2.300882],
+    [58.157706, 10.447378],
+    [122.300000, 39.100000],
+    [-143.478490, 50.103201],
+    [-67.132330, 23.717925],
+    [36.521510, -50.103200],
+    [112.867673, -23.717930],
+    [174.754610, -2.300882],
+    [-121.842290, -10.447350],
+    [-57.700000, -39.100000],
+    [-169.463800, -64.700000],
 ];
 */
 
 const VERTICES = [
-    [0.4415683007545653, 0.18389136319533403],
-    [1.5306383601950244, -0.09154932605118538],
-    [1.3884551824944764, 1.0150434551068612],
-    [0.8883725892651138, 2.134537675189065],
-    [0.6963305035563812, -2.5041720562897587],
-    [1.1568404438038205, -1.1716801930353649],
-    [2.44526213258012, 0.6374205973000342],
-    [1.9847522970524352, 1.9699125129143058],
-    [1.6109542933947687, 3.050043327538608],
-    [1.7531369824031262, -2.1265491286697618],
-    [2.253220064324679, -1.007054978400728],
-    [2.7000243528352277, -2.9577012729411667],
+    [0.18389136319533403, 0.4415683007545653],
+    [-0.09154932605118538, 1.5306383601950244],
+    [1.0150434551068612, 1.3884551824944764],
+    [2.134537675189065, 0.8883725892651138],
+    [-2.5041720562897587, 0.6963305035563812],
+    [-1.1716801930353649, 1.1568404438038205],
+    [0.6374205973000342, 2.44526213258012],
+    [1.9699125129143058, 1.9847522970524352],
+    [3.050043327538608, 1.6109542933947687],
+    [-2.1265491286697618, 1.7531369824031262],
+    [-1.007054978400728, 2.253220064324679],
+    [-2.9577012729411667, 2.7000243528352277],
 ];
 
 const VERTICES_CARTESIAN = [
@@ -71,28 +72,28 @@ const CENTROIDS = [
 ];
 
 const CENTROIDS_SPHERICAL = [
-    [1.801757741965819, 0.5064955695927782],
-    [1.0790806751463253, 0.4019881772330841],
-    [0.9706047250692446, -0.45060392942097727],
-    [1.6498624486752553, -0.7334295363593504],
-    [2.176725640973267, -0.1876693157094395],
-    [1.998166670433534, 1.2527164469653886],
-    [1.3980507904064579, 1.6781469031882286],
-    [0.7672134847003013, 1.248397432580321],
-    [0.2630484433874145, 2.536945009720032],
-    [0.5160450811109822, -1.347517410484915],
-    [1.1434258518811429, -1.8888761879412208],
-    [1.7435416861049893, -1.463445765839948],
-    [2.3743789961611093, -1.893195190842197],
-    [2.8785442050874535, -0.6046476319069939],
-    [2.6255476031208675, 1.794075267836678],
-    [1.49173023794455, 2.4081631417632714],
-    [0.9648670065862643, 2.9539233328605654],
-    [1.3398347137602507, -2.635097040316686],
-    [2.0625117938838713, -2.739604421909513],
-    [2.1709879559728362, 2.6909887573036166],
-    [2.625547603120867, 1.794075267836678],
-    [1.49173023794455, 2.4081631417632714],
+    [0.5064955695927782, 1.801757741965819],
+    [0.4019881772330841, 1.0790806751463253],
+    [-0.45060392942097727, 0.9706047250692446],
+    [-0.7334295363593504, 1.6498624486752553],
+    [-0.1876693157094395, 2.176725640973267],
+    [1.2527164469653886, 1.998166670433534],
+    [1.6781469031882286, 1.3980507904064579],
+    [1.248397432580321, 0.7672134847003013],
+    [2.536945009720032, 0.2630484433874145],
+    [-1.347517410484915, 0.5160450811109822],
+    [-1.8888761879412208, 1.1434258518811429],
+    [-1.463445765839948, 1.7435416861049893],
+    [-1.893195190842197, 2.3743789961611093],
+    [-0.6046476319069939, 2.8785442050874535],
+    [1.794075267836678, 2.6255476031208675],
+    [2.4081631417632714, 1.49173023794455],
+    [2.9539233328605654, 0.9648670065862643],
+    [-2.635097040316686, 1.3398347137602507],
+    [-2.739604421909513, 2.0625117938838713],
+    [2.6909887573036166, 2.1709879559728362],
+    [1.794075267836678, 2.625547603120867],
+    [2.4081631417632714, 1.49173023794455],
 ];
 
 const ISO = [
@@ -129,10 +130,17 @@ const FLIP_TRIANGLE = [
 
 for(let i = 0;i < 22;i++){
     //code used to calculate rotation matrices
-    let centroidPhi = CENTROIDS_SPHERICAL[i][0];
-    let centroidLambda = CENTROIDS_SPHERICAL[i][1];
+    let centroidLambda = CENTROIDS_SPHERICAL[i][0]; //longitude
+    let centroidPhi = CENTROIDS_SPHERICAL[i][1];
 
-    let a = centroidPhi; 
+    let vertex = VERTICIES[ISO[i][0]]; 
+    let v = [vertex[0] - centroidLambda, vertex[1]];
+    v = 
+
+
+    let a = -centroidLambda; 
+    let b = -centroidPhi; 
+    let c = 
 
 
     let sina = Math.sin(a);
@@ -142,7 +150,12 @@ for(let i = 0;i < 22;i++){
     let sinc = Math.sin(c);
     let cosc = Math.cos(c);
 
-    double[][] mat = new double[3][3];
+    let mat = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ];
+
     mat[0][0] = cosa * cosb * cosc - sinc * sina;
     mat[0][1] = -sina * cosb * cosc - sinc * cosa;
     mat[0][2] = cosc * sinb;
@@ -155,12 +168,17 @@ for(let i = 0;i < 22;i++){
     mat[2][1] = sinb * sina;
     mat[2][2] = cosb;
 
-    return mat;
+    //return mat;
 
+    for(let j = 0;j < 3;j++){   
+        for(let k = 0;k < 3;k++){
+            console.log(mat[j][k]); //print the rotation matrix
+        }
+        console.log("");
+    
+    }
 
-
-
-    //code used to calculate the centroids
+    //code used to calculate the centroids, longitude and latitude are swapped
     //let vec1 = VERTICES_CARTESIAN[ISO[i][0]];
     //let vec2 = VERTICES_CARTESIAN[ISO[i][1]];
     //let vec3 = VERTICES_CARTESIAN[ISO[i][2]];
@@ -174,26 +192,16 @@ for(let i = 0;i < 22;i++){
     //console.log(CartesiantoGeo(xsum / mag, ysum / mag, zsum / mag)[0], CartesiantoGeo(xsum / mag, ysum / mag, zsum / mag)[1]);
 
     //code used to calculate spherical centroids
-    console.log(CartesianToGeo(CENTROIDS[i][0], CENTROIDS[i][1], CENTROIDS[i][2])[0], CartesianToGeo(CENTROIDS[i][0], CENTROIDS[i][1], CENTROIDS[i][2])[1]);
+    //console.log(CartesianToGeo(CENTROIDS[i][0], CENTROIDS[i][1], CENTROIDS[i][2])[0], CartesianToGeo(CENTROIDS[i][0], CENTROIDS[i][1], CENTROIDS[i][2])[1]);
 }
 
 function fromGeoDimaxion(lat, lon) {
     //first check if input is in range 
-    if(Math.abs(lat) > 90 || Math.abs(lon) > 180) {
+    if(Math.abs(lon) > 180 || Math.abs(lat) > 90) {
         throw new Error("Latitude must be between -90 and 90, and longitude must be between -180 and 180.");
     }
-
-    //convert geo to spherical coordinates
-    let phi = toRadians(90 - lat); //latitude [1]
-    let lambda = toRadians(lon); //longitude [0]
-
-    //convert spherical coordinates to cartesian coordinates
-    let sinphi = Math.sin(phi);
-    let x = sinphi * Math.cos(lambda);
-    let y = sinphi * Math.sin(lambda);
-    let z = Math.cos(phi); 
-
-    let face = findTriangle(x, y, z);
+    let xyz = GeoToCartesian(lon, lat)
+    let face = findTriangle(xyz[0], xyz[1], xyz[2]);
 
     //rotation matrices 
 }
@@ -221,16 +229,21 @@ function findTriangle(x, y, z) {
     return face; 
 }
 
-function GeoToCartesian(lat, lon){
-    let phi = toRadians(90 - lat); //latitude [1]
+function yrotate(v, angle) {
+
+
+}
+
+function GeoToCartesian(lon, lat){
     let lambda = toRadians(lon); //longitude [0]
+    let phi = toRadians(90 - lat); //latitude [1]
 
-    //let sinphi = Math.sin(phi);
-    //let x = sinphi * Math.cos(lambda);
-    //let y = sinphi * Math.sin(lambda);
-    //let z = Math.cos(phi); 
+    let sinphi = Math.sin(phi);
+    let x = sinphi * Math.cos(lambda);
+    let y = sinphi * Math.sin(lambda);
+    let z = Math.cos(phi); 
 
-    return [phi, lambda]; 
+    return [x, y, z]; 
 }
 
 function CartesianToGeo(x, y, z) {
@@ -241,7 +254,7 @@ function CartesianToGeo(x, y, z) {
     //let lat = 90 - toDegrees(phi); //latitude [1]
     //let lon = toDegrees(lambda); //longitude [0]
 
-    return [phi, lambda]; 
+    return [lambda, phi]; 
 }
 
 function toRadians(degrees) {
