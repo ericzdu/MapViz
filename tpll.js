@@ -133,15 +133,14 @@ for(let i = 0;i < 22;i++){
     let centroidLambda = CENTROIDS_SPHERICAL[i][0]; //longitude
     let centroidPhi = CENTROIDS_SPHERICAL[i][1];
 
-    let vertex = VERTICIES[ISO[i][0]]; 
+    let vertex = VERTICES[ISO[i][0]]; 
     let v = [vertex[0] - centroidLambda, vertex[1]];
-    v = 
+    v = yRotate(v, -centroidPhi); //rotate the vertex to the centroid
 
 
     let a = -centroidLambda; 
     let b = -centroidPhi; 
-    let c = 
-
+    let c = (Math.PI / 2) - v[0]; 
 
     let sina = Math.sin(a);
     let cosa = Math.cos(a);
@@ -172,11 +171,13 @@ for(let i = 0;i < 22;i++){
 
     for(let j = 0;j < 3;j++){   
         for(let k = 0;k < 3;k++){
-            console.log(mat[j][k]); //print the rotation matrix
+            process.stdout.write(mat[j][k].toString() + ", "); //print the rotation matrix
+            //print(mat[j][k] + ","); //print the rotation matrix
         }
         console.log("");
-    
     }
+    console.log("");
+
 
     //code used to calculate the centroids, longitude and latitude are swapped
     //let vec1 = VERTICES_CARTESIAN[ISO[i][0]];
@@ -229,9 +230,28 @@ function findTriangle(x, y, z) {
     return face; 
 }
 
-function yrotate(v, angle) {
+function yRotate(v, angle) {
+    let c = sphericalToCartesian(v[0], v[1]);
+    let x = c[0];
+    c[0] = c[2] * Math.sin(angle) + x * Math.cos(angle);
+    c[2] = c[2] * Math.cos(angle) - x * Math.sin(angle);
 
+    let mag = Math.sqrt(c[0] * c[0] + c[1] * c[1] + c[2] * c[2]);
+    c[0] /= mag;
+    c[1] /= mag;
+    c[2] /= mag;
 
+    let lambda = Math.atan2(c[1], c[0]);
+    let phi = Math.atan2(Math.sqrt(c[0] * c[0] + c[1] * c[1]), c[2]);
+    return [lambda, phi];
+}
+
+function sphericalToCartesian(lambda, phi) {
+    let sinphi = Math.sin(phi);
+    let x = sinphi * Math.cos(lambda);
+    let y = sinphi * Math.sin(lambda);
+    let z = Math.cos(phi);
+    return [x, y, z]; 
 }
 
 function GeoToCartesian(lon, lat){
