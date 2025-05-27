@@ -1,6 +1,21 @@
 const Z = Math.sqrt(5 + 2 * Math.sqrt(5)) / Math.sqrt(15);
 const EL6 = (Math.sqrt(8) / Math.sqrt(5 + Math.sqrt(5))) / 6; 
 const DVE = Math.sqrt(3 + Math.sqrt(5)) / Math.sqrt(5 + Math.sqrt(5));
+const ARC = 2 * Math.asin(Math.sqrt(5 - Math.sqrt(5)) / Math.sqrt(10));
+const THETA = -2.617993878; 
+const SIN_THETA = Math.sin(THETA);
+const COS_THETA = Math.cos(THETA);
+
+const BERING_X = -0.3420420960118339;//-0.3282152608138795;
+const BERING_Y = -0.322211064085279;//-0.3281491467713469;
+const ARCTIC_Y = -0.2;//-0.3281491467713469;
+const ARCTIC_M = (ARCTIC_Y - Math.sqrt(3) * ARC / 4) / (BERING_X - -0.5 * ARC);
+const ARCTIC_B = ARCTIC_Y - ARCTIC_M * BERING_X;
+const ALEUTIAN_Y = -0.5000446805492526;//-0.5127463765943157;
+const ALEUTIAN_XL = -0.5149231279757507;//-0.4957832938238718;
+const ALEUTIAN_XR = -0.45;
+const ALEUTIAN_M = (BERING_Y - ALEUTIAN_Y) / (BERING_X - ALEUTIAN_XR);
+const ALEUTIAN_B = BERING_Y - ALEUTIAN_M * BERING_X;
 
 //vertex coordinates 
 /*
@@ -355,7 +370,6 @@ function fromGeoDimaxion(lat, lon) {
     }
 
     let S = Z / pvec[2];
-
     let xp = S * pvec[0];
     let yp = S * pvec[1];
 
@@ -383,6 +397,31 @@ function fromGeoDimaxion(lat, lon) {
     projectedVector[1] += CENTER_MAP[face][1];
     
     return projectedVector;
+}
+
+function fromBTEDimaxion(lat, lon) {
+    let c = fromGeoDimaxion(lat, lon); //call the fromGeoDimaxion function to get the projected vector
+    let x = c[0];
+    let y = c[1];
+
+    let easia = this.isEurasianPart(x, y);
+
+    y -= 0.75 * ARC * Math.sqrt(3); 
+
+    if (easia) {
+        x += ARC;
+
+        let t = x;
+        x = COS_THETA * x - SIN_THETA * y;
+        y = SIN_THETA * t + COS_THETA * y;
+
+    } else {
+        x -= ARC;
+    }
+
+    c[0] = y;
+    c[1] = -x;
+    return c;
 }
 
 function findTriangle(x, y, z) {
@@ -422,6 +461,38 @@ function yRotate(v, angle) {
     let lambda = Math.atan2(c[1], c[0]);
     let phi = Math.atan2(Math.sqrt(c[0] * c[0] + c[1] * c[1]), c[2]);
     return [lambda, phi];
+}
+
+function isEurasianPart(x, y) {
+
+    //catch vast majority of cases in not near boundary
+    if (x > 0) {
+        return false;
+    }
+    if (x < -0.5 * ARC) {
+        return true;
+    }
+
+    if (y > Math.sqrt(3) * ARC / 4) //above arctic ocean
+    {
+        return x < 0;
+    }
+
+    if (y < ALEUTIAN_Y) //below bering sea
+    {
+        return y < (ALEUTIAN_Y + ALEUTIAN_XL) - x;
+    }
+
+    if (y > BERING_Y) { //boundary across arctic ocean
+
+        if (y < ARCTIC_Y) {
+            return x < BERING_X; //in strait
+        }
+
+        return y < ARCTIC_M * x + ARCTIC_B; //above strait
+    }
+
+    return y > ALEUTIAN_M * x + ALEUTIAN_B;
 }
 
 function sphericalToCartesian(lambda, phi) {
