@@ -285,7 +285,7 @@ const ROTATION_MATRICES = [
     ]
   ];  
 
-for(let i = 0;i < 22;i++){
+//for(let i = 0;i < 22;i++){
     // //code used to calculate rotation matrices
     // let centroidLambda = CENTROIDS_SPHERICAL[i][0]; //longitude
     // let centroidPhi = CENTROIDS_SPHERICAL[i][1];
@@ -351,7 +351,19 @@ for(let i = 0;i < 22;i++){
 
     //code used to calculate spherical centroids
     //console.log(CartesianToGeo(CENTROIDS[i][0], CENTROIDS[i][1], CENTROIDS[i][2])[0], CartesianToGeo(CENTROIDS[i][0], CENTROIDS[i][1], CENTROIDS[i][2])[1]);
-}
+//}
+
+//45.50477255854168, -73.5567449821748
+console.log(fromBTEDimaxion(45.50477255854168, -73.5567449821748)[0], fromBTEDimaxion(45.50477255854168, -73.5567449821748)[1]);
+console.log(fromGeoDimaxion(45.50477255854168, -73.5567449821748)[0], fromGeoDimaxion(45.50477255854168, -73.5567449821748)[1]);
+
+console.log(fromBTEDimaxion(-73.5567449821748, 45.50477255854168), fromBTEDimaxion(-73.5567449821748, 45.50477255854168)); //test the function with a location in Montreal, Canada
+
+let scale = 1.0 / 1.1473979730192934;
+let meters =  40075017.0 / (2.0 * Math.PI) / scale; 
+console.log(fromBTEDimaxion(-12.704777576814982, 29.188816746006623)[0] * meters, fromBTEDimaxion(-12.704777576814982, 29.188816746006623)[1] * meters);
+console.log(fromBTEDimaxion(45.50477255854168, -73.5567449821748)[0] * meters, fromBTEDimaxion(45.50477255854168, -73.5567449821748)[1] * meters);
+
 
 function fromGeoDimaxion(lat, lon) {
     //first check if input is in range 
@@ -404,7 +416,7 @@ function fromBTEDimaxion(lat, lon) {
     let x = c[0];
     let y = c[1];
 
-    let easia = this.isEurasianPart(x, y);
+    let easia = isEurasianPart(x, y);
 
     y -= 0.75 * ARC * Math.sqrt(3); 
 
